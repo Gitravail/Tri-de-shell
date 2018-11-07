@@ -83,7 +83,7 @@ def tri_shell_3(t):
                     cpt_trans += 1
                 t[j] = x
 
-        if ref < len(suite):
+        if ref+1 < len(suite):
             ref = ref+1
             incr = suite[ref]
         else:
@@ -142,9 +142,9 @@ t4 += t
 
 tri_shell_1(t1)
 
-tri_shell_2(t2)
+#tri_shell_2(t2)
 
-tri_shell_3(t3)
+#tri_shell_3(t3)
 
 tri_dobosiewicz(t4)
 #tri_dobosiewicz(t)

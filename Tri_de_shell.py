@@ -1,13 +1,13 @@
 import random
-import time
 from math import floor
 
-N = 20
-
-"""code qui marche"""
+N = 20000
 
 
-def tri_shell(t):
+
+def tri_shell_1(t):
+    cpt_comp = 0
+    cpt_trans = 0
     incr = N // 2
     while True:
 
@@ -18,19 +18,25 @@ def tri_shell(t):
                 # insertion de t[i] dans sa série
                 x = t[i]
                 j = i
-
+                cpt_comp += 1
                 while j > 0 and t[j - incr] > x:
                     t[j] = t[j - incr]
                     j = j - incr
-
+                    cpt_trans += 1
                 t[j] = x
 
         if incr == 1:
             break
         incr = incr // 2
 
+    print("tri_shell_1")
+    print("Comparaison = " + str(cpt_comp))
+    print("Transfert = " + str(cpt_trans) + "\n")
+
 
 def tri_shell_2(t):
+    cpt_comp = 0
+    cpt_trans = 0
     incr = 1
     while True:
 
@@ -41,19 +47,24 @@ def tri_shell_2(t):
                 # insertion de t[i] dans sa série
                 x = t[i]
                 j = i
-
+                cpt_comp += 1
                 while j > 0 and t[j - incr] > x:
                     t[j] = t[j - incr]
                     j = j - incr
-
+                    cpt_trans += 1
                 t[j] = x
 
-        if incr == 1:
+        if incr > N // 2:
             break
         incr = 3 * incr + 1
+    print("tri_shell_2")
+    print("Comparaison = " + str(cpt_comp))
+    print("Transfert = " + str(cpt_trans) + "\n")
 
 
 def tri_shell_3(t):
+    cpt_comp = 0
+    cpt_trans = 0
     suite = [1, 4, 10, 23, 57, 132, 301, 701]
     ref = 0
     incr = suite[ref]
@@ -65,11 +76,11 @@ def tri_shell_3(t):
                 # insertion de t[i] dans sa série
                 x = t[i]
                 j = i
-
+                cpt_comp += 1
                 while j > 0 and t[j - incr] > x:
                     t[j] = t[j - incr]
                     j = j - incr
-
+                    cpt_trans += 1
                 t[j] = x
 
         if ref < len(suite):
@@ -80,6 +91,9 @@ def tri_shell_3(t):
 
         if incr > N // 2:
             break
+    print("tri_shell_3")
+    print("Comparaison = " + str(cpt_comp))
+    print("Transfert = " + str(cpt_trans) + "\n")
 
 
 def tab_rand(taille):
@@ -90,6 +104,8 @@ def tab_rand(taille):
 
 
 def tri_dobosiewicz(t):
+    cpt_comp = 0
+    cpt_trans = 0
     fini = False
     intv = len(t) - 1
     while (intv > 1) or not fini:
@@ -99,26 +115,44 @@ def tri_dobosiewicz(t):
         i = 0
         fini = True
         while (i + intv) <= len(t)-1:
+            cpt_comp += 1
             if t[i] > t[i + intv]:
+                cpt_trans += 1
                 attente = t[i]
                 t[i] = t[i + intv]
                 t[i + intv] = attente
                 fini = False
             i = i + 1
+    print("tri_dobosiewicz")
+    print("Comparaison = " + str(cpt_comp))
+    print("Transfert = " + str(cpt_trans) + "\n")
 
 
-
-
-t1 = [5, 41, 53, 11, 20, 5, 1, 9, 12, 102, 15, 23, 43, 2, 36, 209, 167, 125, 97, 49, 43]
-t2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-#t = [2, 13, 9, 20, 12, 11, 18, 5, 3, 17, 8, 10, 16, 7, 6, 1, 14, 19, 4, 15]
 t = tab_rand(N)
-print("Avant : ", t)
+t1 = []
+t2 = []
+t3 = []
+t4 = []
+t1 += t
+t2 += t
+t3 += t
+t4 += t
 
-debut = time.time()
-tri_dobosiewicz(t)
+#print("Avant : ", t)
+
+tri_shell_1(t1)
+
+tri_shell_2(t2)
+
+tri_shell_3(t3)
+
+tri_dobosiewicz(t4)
+#tri_dobosiewicz(t)
+#tri_dobosiewicz(t)
 #tri_shell_3(t)
-fin = time.time()
+#tri_shell_3(t)
 
-print("Apres : ", t)
-print("duree : ", fin - debut)
+#print("Après : ", t)
+
+
+

@@ -1,13 +1,15 @@
 import random
+import time
 from math import floor
 
-N = 20000
+N = 10000
 
 
 
 def tri_shell_1(t):
     cpt_comp = 0
     cpt_trans = 0
+    start = time.time()
     incr = N // 2
     while True:
 
@@ -29,14 +31,14 @@ def tri_shell_1(t):
             break
         incr = incr // 2
 
-    print("tri_shell_1")
-    print("Comparaison = " + str(cpt_comp))
-    print("Transfert = " + str(cpt_trans) + "\n")
+    temps = time.time()-start
+    return (cpt_comp, cpt_trans, temps)
 
 
 def tri_shell_2(t):
     cpt_comp = 0
     cpt_trans = 0
+    start = time.time()
     incr = 1
     while True:
 
@@ -57,14 +59,15 @@ def tri_shell_2(t):
         if incr > N // 2:
             break
         incr = 3 * incr + 1
-    print("tri_shell_2")
-    print("Comparaison = " + str(cpt_comp))
-    print("Transfert = " + str(cpt_trans) + "\n")
+
+    temps = time.time() - start
+    return (cpt_comp, cpt_trans, temps)
 
 
 def tri_shell_3(t):
     cpt_comp = 0
     cpt_trans = 0
+    start = time.time()
     suite = [1, 4, 10, 23, 57, 132, 301, 701]
     ref = 0
     incr = suite[ref]
@@ -82,18 +85,16 @@ def tri_shell_3(t):
                     j = j - incr
                     cpt_trans += 1
                 t[j] = x
-
+        if incr > N // 2:
+            break
         if ref+1 < len(suite):
             ref = ref+1
             incr = suite[ref]
         else:
             incr = round(incr * 2.3)
 
-        if incr > N // 2:
-            break
-    print("tri_shell_3")
-    print("Comparaison = " + str(cpt_comp))
-    print("Transfert = " + str(cpt_trans) + "\n")
+    temps = time.time() - start
+    return (cpt_comp, cpt_trans, temps)
 
 
 def tab_rand(taille):
@@ -106,6 +107,7 @@ def tab_rand(taille):
 def tri_dobosiewicz(t):
     cpt_comp = 0
     cpt_trans = 0
+    start = time.time()
     fini = False
     intv = len(t) - 1
     while (intv > 1) or not fini:
@@ -123,9 +125,13 @@ def tri_dobosiewicz(t):
                 t[i + intv] = attente
                 fini = False
             i = i + 1
-    print("tri_dobosiewicz")
-    print("Comparaison = " + str(cpt_comp))
-    print("Transfert = " + str(cpt_trans) + "\n")
+
+    temps = time.time() - start
+    return (cpt_comp, cpt_trans, temps)
+
+def printResult(tupleValues):
+    print("\n" + "Comparaisons : " + str(tupleValues[0]) + "\t" + "Transferts : " + str(tupleValues[1]))
+    print("Temps : " + str(tupleValues[2]) + "\n")
 
 
 t = tab_rand(N)
@@ -138,21 +144,15 @@ t2 += t
 t3 += t
 t4 += t
 
-#print("Avant : ", t)
 
-tri_shell_1(t1)
+printResult(tri_shell_1(t1))
 
-#tri_shell_2(t2)
+printResult(tri_shell_2(t2))
 
-#tri_shell_3(t3)
+printResult(tri_shell_3(t3))
 
-tri_dobosiewicz(t4)
-#tri_dobosiewicz(t)
-#tri_dobosiewicz(t)
-#tri_shell_3(t)
-#tri_shell_3(t)
+printResult(tri_dobosiewicz(t4))
 
-#print("Après : ", t)
 
 
 
